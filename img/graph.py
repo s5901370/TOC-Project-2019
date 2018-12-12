@@ -1,0 +1,60 @@
+from pygraphviz import *
+G=AGraph(strict=False,directed=True)
+G.add_node('Q1')
+G.add_node('1.5 T')
+G.add_node('1.5 F')
+G.add_node('2.5 T')
+G.add_node('2.5 F')
+G.add_node('3.5 T')
+G.add_node('3.5 F')
+G.add_node('4.5 T')
+G.add_node('4.5 F')
+G.add_node('5.5 T')
+G.add_node('5.5 F')
+G.add_node('Q2')
+G.add_node('Q3')
+G.add_node('Q4')
+G.add_node('Q5')
+G.add_node('finite state')
+G.add_edge('Q1','1.5 T')
+G.add_edge('Q1','1.5 F')
+G.add_edge('Q2','2.5 T')
+G.add_edge('Q2','2.5 F')
+G.add_edge('Q3','3.5 T')
+G.add_edge('Q3','3.5 F')
+G.add_edge('Q4','4.5 T')
+G.add_edge('Q4','4.5 F')
+G.add_edge('Q5','5.5 T')
+G.add_edge('Q5','5.5 F')
+G.add_edge('1.5 T','Q2')
+G.add_edge('1.5 F','Q2')
+G.add_edge('2.5 T','Q3')
+G.add_edge('2.5 F','Q3')
+G.add_edge('3.5 T','Q4')
+G.add_edge('3.5 F','Q4')
+G.add_edge('4.5 T','Q5')
+G.add_edge('4.5 F','Q5')
+G.add_edge('5.5 T','finite state')
+G.add_edge('5.5 F','finite state')
+e = G.get_edge('Q1','1.5 T')
+e.attr['label'] = 'right'
+e = G.get_edge('Q1','1.5 F')
+e.attr['label'] = 'wrong'
+e = G.get_edge('Q2','2.5 T')
+e.attr['label'] = 'right'
+e = G.get_edge('Q2','2.5 F')
+e.attr['label'] = 'wrong'
+e = G.get_edge('Q3','3.5 T')
+e.attr['label'] = 'right'
+e = G.get_edge('Q3','3.5 F')
+e.attr['label'] = 'wrong'
+e = G.get_edge('Q4','4.5 T')
+e.attr['label'] = 'right'
+e = G.get_edge('Q4','4.5 F')
+e.attr['label'] = 'wrong'
+e = G.get_edge('Q5','5.5 T')
+e.attr['label'] = 'right'
+e = G.get_edge('Q5','5.5 F')
+e.attr['label'] = 'wrong'
+G.layout(prog='dot')
+G.draw('file.png')
