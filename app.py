@@ -1,35 +1,54 @@
+# coding=UTF-8
 from bottle import route, run, request, abort, static_file
-
+from utils import send_text_message
 from fsm import TocMachine
 
-
-VERIFY_TOKEN = "Your Webhook Verify Token"
+VERIFY_TOKEN = "a88"
 machine = TocMachine(
     states=[
         'user',
-        'state1',
-        'state2'
+        'Q1',
+        'Q2',
+        'Q3',
+        'Q4',
+        'Q5'
     ],
     transitions=[
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state1',
-            'conditions': 'is_going_to_state1'
+            'dest': 'Q1',
+            #'conditions': 'is_going_to_state1'
         },
         {
             'trigger': 'advance',
-            'source': 'user',
-            'dest': 'state2',
-            'conditions': 'is_going_to_state2'
+            'source': 'Q1',
+            'dest': 'Q2'
+            # 'conditions': 'go2'
         },
         {
-            'trigger': 'go_back',
-            'source': [
-                'state1',
-                'state2'
-            ],
+            'trigger': 'advance',
+            'source': 'Q2',
+            'dest': 'Q3'
+            # 'conditions': 'go3'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'Q3',
+            'dest': 'Q4'
+            # 'conditions': 'go4'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'Q4',
+            'dest': 'Q5'
+            # 'conditions': 'go5'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'Q5',
             'dest': 'user'
+            # 'conditions': 'go_back'
         }
     ],
     initial='user',
@@ -62,6 +81,7 @@ def webhook_handler():
     if body['object'] == "page":
         event = body['entry'][0]['messaging'][0]
         machine.advance(event)
+        #send_text_message(body['entry'][0]['messaging'][0]['sender']['id'],u'把把包')
         return 'OK'
 
 
